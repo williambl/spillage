@@ -5,6 +5,8 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -60,11 +62,11 @@ public class Spillage
     public void onPlayerTick(final LivingEvent.LivingUpdateEvent event) {
         if (event.getEntity() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntity();
-            if (player.getHeldItemMainhand().getItem() instanceof BucketItem) {
+            if (player.getHeldItemMainhand().getItem() instanceof BucketItem && player.getHeldItemMainhand().getItem() != Items.BUCKET) {
                 spillBucket(player.getHeldItemMainhand(), player);
                 emptyBucket(player.getHeldItemMainhand(), player);
             }
-            if (player.getHeldItemOffhand().getItem() instanceof BucketItem) {
+            if (player.getHeldItemOffhand().getItem() instanceof BucketItem && player.getHeldItemMainhand().getItem() != Items.BUCKET) {
                 spillBucket(player.getHeldItemOffhand(), player);
                 emptyBucket(player.getHeldItemOffhand(), player);
             }
