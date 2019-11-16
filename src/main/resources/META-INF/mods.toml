@@ -20,9 +20,9 @@ displayName="Spillage" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 updateJSONURL="http://raw.githubusercontent.com/williambl/spillage/master/update.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/spillage" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="" #optional
+logoFile="logo.png" #optional
 # A text field displayed in the mod UI
 credits="" #optional
 # A text field displayed in the mod UI
