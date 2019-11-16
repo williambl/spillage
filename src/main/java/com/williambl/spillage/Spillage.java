@@ -101,7 +101,7 @@ public class Spillage
     private void emptyBucket(ItemStack stack, PlayerEntity player) {
         CompoundNBT tag = stack.getOrCreateChildTag("Spillage");
         int timesSpilled = tag.getInt("TimesSpilled");
-        if (timesSpilled > 100) {
+        if (timesSpilled >= 2) {
             stack.shrink(1);
             player.addItemStackToInventory(new ItemStack(Items.BUCKET));
         }
