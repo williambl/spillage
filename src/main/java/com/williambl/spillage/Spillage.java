@@ -98,6 +98,7 @@ public class Spillage
             tag.putInt("TimesSpilled", ++timesSpilled);
 
             world.setBlockState(pos, bucket.getFluid().getDefaultState().getBlockState());
+            player.sendStatusMessage(new StringTextComponent("You spilled your ").appendSibling(bucket.getFluid().getDefaultState().getBlockState().getBlock().getNameTextComponent()).appendText(", be careful!"), true);
         }
     }
 
