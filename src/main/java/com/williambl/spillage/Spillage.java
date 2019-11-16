@@ -79,15 +79,20 @@ public class Spillage
         BucketItem bucket = (BucketItem) stack.getItem();
         int timesSpilled = tag.getInt("TimesSpilled");
         System.out.println(timesSpilled);
+
+        BlockPos pos = world.rand.nextBoolean() ?
+                player.getPosition().offset(Direction.byHorizontalIndex(world.rand.nextInt(3)))
+                : player.getPosition();
+
         if (
-                world.rand.nextDouble() < 0.001 / (timesSpilled + 1)
-                        || player.isSprinting() && world.rand.nextDouble() < 0.002 / (timesSpilled + 1)
-                        || player.isAirBorne && world.rand.nextDouble() < 0.003 / (timesSpilled + 1)
+                (world.rand.nextDouble() < 0.01 / (timesSpilled + 1)
+                        || player.isSprinting() && world.rand.nextDouble() < 0.02 / (timesSpilled + 1)
+                        || player.isAirBorne && world.rand.nextDouble() < 0.03 / (timesSpilled + 1)
+                ) && world.getBlockState(pos).isAir()
         ) {
             tag.putInt("TimesSpilled", ++timesSpilled);
-            if (world.getBlockState(player.getPosition()).isAir()) {
-                world.setBlockState(player.getPosition(), bucket.getFluid().getDefaultState().getBlockState());
-            }
+
+            world.setBlockState(pos, bucket.getFluid().getDefaultState().getBlockState());
         }
     }
 
