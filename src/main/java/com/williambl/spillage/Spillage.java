@@ -3,6 +3,7 @@ package com.williambl.spillage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -59,10 +60,14 @@ public class Spillage
     public void onPlayerTick(final LivingEvent.LivingUpdateEvent event) {
         if (event.getEntity() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntity();
-            if (player.getHeldItemMainhand().getItem() instanceof BucketItem)
+            if (player.getHeldItemMainhand().getItem() instanceof BucketItem) {
                 spillBucket(player.getHeldItemMainhand(), player);
-            if (player.getHeldItemOffhand().getItem() instanceof BucketItem)
+                emptyBucket(player.getHeldItemMainhand(), player);
+            }
+            if (player.getHeldItemOffhand().getItem() instanceof BucketItem) {
                 spillBucket(player.getHeldItemOffhand(), player);
+                emptyBucket(player.getHeldItemOffhand(), player);
+            }
         }
     }
 
@@ -81,6 +86,15 @@ public class Spillage
             if (world.getBlockState(player.getPosition()).isAir()) {
                 world.setBlockState(player.getPosition(), bucket.getFluid().getDefaultState().getBlockState());
             }
+        }
+    }
+
+    private void emptyBucket(ItemStack stack, PlayerEntity player) {
+        CompoundNBT tag = stack.getOrCreateChildTag("Spillage");
+        int timesSpilled = tag.getInt("TimesSpilled");
+        if (timesSpilled > 100) {
+            stack.shrink(1);
+            player.addItemStackToInventory(new ItemStack(Items.BUCKET));
         }
     }
 
