@@ -74,7 +74,7 @@ public class Spillage
         System.out.println(timesSpilled);
         if (
                 world.rand.nextDouble() < 0.001 / (timesSpilled + 1)
-                        || player.isSprinting() && world.rand.nextDouble() < (0.002 / timesSpilled + 1)
+                        || player.isSprinting() && world.rand.nextDouble() < 0.002 / (timesSpilled + 1)
                         || player.isAirBorne && world.rand.nextDouble() < 0.003 / (timesSpilled + 1)
         ) {
             tag.putInt("TimesSpilled", ++timesSpilled);
