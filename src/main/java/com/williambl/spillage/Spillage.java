@@ -60,6 +60,8 @@ public class Spillage
 
     @SubscribeEvent
     public void onPlayerTick(final LivingEvent.LivingUpdateEvent event) {
+        if (event.getEntity().world.isRemote)
+            return;
         if (event.getEntity() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntity();
             if (player.getHeldItemMainhand().getItem() instanceof BucketItem && player.getHeldItemMainhand().getItem() != Items.BUCKET) {
