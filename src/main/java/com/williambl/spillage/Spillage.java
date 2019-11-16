@@ -7,9 +7,12 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -104,6 +107,17 @@ public class Spillage
         if (timesSpilled >= 2) {
             stack.shrink(1);
             player.addItemStackToInventory(new ItemStack(Items.BUCKET));
+        }
+    }
+
+    @SubscribeEvent
+    public void onTooltipShow(ItemTooltipEvent event) {
+        if (event.getItemStack().getItem() instanceof BucketItem && event.getItemStack().getItem() != Items.BUCKET) {
+            if (event.getItemStack().hasTag()) {
+                int timesSpilled = event.getItemStack().getOrCreateChildTag("Spillage").getInt("TimesSpilled");
+                event.getToolTip().add(new StringTextComponent("Times Spilled: " + timesSpilled).applyTextStyle(TextFormatting.BLUE));
+                event.getToolTip().add(new StringTextComponent("Bucket will empty after " + 2 + " spills!").applyTextStyle(TextFormatting.DARK_RED));
+            }
         }
     }
 
